@@ -1,0 +1,3 @@
+C:/Users/fjavi/PR3_definitivo/cmake-build-debug/CMakeFiles/PR3_definitivo.dir
+C:/Users/fjavi/PR3_definitivo/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/fjavi/PR3_definitivo/cmake-build-debug/CMakeFiles/rebuild_cache.dir
