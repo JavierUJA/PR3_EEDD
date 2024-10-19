@@ -75,7 +75,7 @@ Usuario* ReanelCar::buscarUsrNif(const std::string& nif) {
     Iterador<Usuario> it = usuarios.iterador();
     while (it.haySiguiente()) {
         Usuario& user = it.dato();
-        it.siguiente(); //:::::::::::::::::::::AQUI:::::::::::::::::::::::::
+        it.siguiente();
         if (user.getDNI() == nif) {
             return &user;
         }
@@ -83,38 +83,29 @@ Usuario* ReanelCar::buscarUsrNif(const std::string& nif) {
     return nullptr;
 }
 
-
 /**
  * @brief Buscar usuarios por parte de su nombre
- * @param substring
- * @return
+ * @param substring Subcadena a buscar en el nombre de los usuarios.
+ * @return Lista de usuarios que contienen la subcadena en su nombre.
  */
 ListaDEnlazada<Usuario> ReanelCar::buscarUsrNomb(const std::string& substring) {
     ListaDEnlazada<Usuario> resultados;
     Iterador<Usuario> it = usuarios.iterador();
     while (it.haySiguiente()) {
         Usuario& user = it.dato();
-        it.siguiente(); //:::::::::::::::::::::AQUI:::::::::::::::::::::::::
+        it.siguiente();
         if (user.getNombre().find(substring) == 0) {
             resultados.insertarFin(user);
         }
     }
 
-    /*Iterador<Usuario> itU = resultados.iterador();
-    while(itU.haySiguiente()){
-        Usuario& usu = itU.dato();
-        std::cout << usu.getNombre() << ", ";
-        itU.siguiente();
-    }*/
-
     return resultados;
 }
 
-
 /**
  * @brief Buscar coche por matrícula
- * @param matricula
- * @return
+ * @param matricula Matrícula del coche a buscar.
+ * @return Puntero al coche encontrado, o nullptr si no existe.
  */
 Coche* ReanelCar::buscarCochMat(const std::string& matricula) {
     for (int i = 0; i < coches.tamlog(); i++) {
@@ -125,37 +116,29 @@ Coche* ReanelCar::buscarCochMat(const std::string& matricula) {
     return nullptr;
 }
 
-
 /**
- *
- * @brief Buscar coches por modelos
- * @param modelo Modelo que queremos buscar
- * @return Un vector dinámico con los coches cuyo modelo son los dados
- *
+ * @brief Buscar coches por modelo
+ * @param modelo Modelo que queremos buscar.
+ * @return Un vector dinámico con los coches cuyo modelo coincide.
  */
 VDinamico<Coche*> ReanelCar::buscarCochModelo(const std::string &modelo) {
     VDinamico<Coche*> cochesEncontrados;
 
     for (int i = 0; i < coches.tamlog(); ++i) {
         Coche* coche = coches[i];
-        if (coche->getModelo() == modelo && coche->getAlquilado() == false) {
+        if (coche->getModelo() == modelo && !coche->getAlquilado()) {
             cochesEncontrados.insertar(coche);
         }
     }
 
-    /*for(int i = 0; i < cochesEncontrados.tamlog(); i++){
-        std::cout << cochesEncontrados.operator[](i)->getId() << ", ";
-    }*/
-
     return cochesEncontrados;
 }
 
-
 /**
- * @brief Alquila el coche que pasemos como parámetro al usuario que pasemos también
- * @param usuario
- * @param coche
- * @return
+ * @brief Alquila un coche al usuario especificado.
+ * @param usuario Usuario que alquila el coche.
+ * @param coche Coche a alquilar.
+ * @return true si el alquiler se realiza con éxito, false si ya está alquilado.
  */
 bool ReanelCar::alquilar(Usuario &usuario, Coche &coche) {
     if (coche.getAlquilado()) {
@@ -169,8 +152,11 @@ bool ReanelCar::alquilar(Usuario &usuario, Coche &coche) {
     return true;
 }
 
-
-
+/**
+ * @brief Busca coches por modelo utilizando búsqueda binaria.
+ * @param modelo Modelo que queremos buscar.
+ * @return Un vector dinámico con los coches cuyo modelo coincide.
+ */
 VDinamico<Coche*> ReanelCar::buscarCochModeloBinario(const std::string& modelo) {
     coches.ordenar();
     int indice = coches.busquedabinaria(modelo);
@@ -193,7 +179,10 @@ VDinamico<Coche*> ReanelCar::buscarCochModeloBinario(const std::string& modelo) 
     return cochesEncontrados;
 }
 
-
+/**
+ * @brief Obtiene la lista de usuarios registrados.
+ * @return Lista de usuarios.
+ */
 ListaDEnlazada<Usuario> ReanelCar::getUsuarios(){
     ListaDEnlazada<Usuario> user;
 
@@ -205,28 +194,37 @@ ListaDEnlazada<Usuario> ReanelCar::getUsuarios(){
     return user;
 }
 
-
+/**
+ * @brief Establece la lista de usuarios.
+ * @param users Lista de usuarios a establecer.
+ */
 void ReanelCar::setUsuarios(ListaDEnlazada<Usuario> users){
     this->usuarios = users;
-
 }
+
+/**
+ * @brief Verifica si un usuario tiene un coche alquilado.
+ * @param dni DNI del usuario a verificar.
+ * @return true si el usuario tiene un coche alquilado, false en caso contrario.
+ */
 bool ReanelCar::usuarioConCoche(const std::string& dni){
-    // Iteramos sobre la lista de usuarios
     Iterador<Usuario> it = usuarios.iterador();
     while (it.haySiguiente()) {
         const Usuario& usuario = it.dato();
         if (usuario.getDNI() == dni) {
-            // Si el usuario tiene un coche alquilado, retornamos true
-            if (usuario.getCoche()) { // Asegúrate de tener un método que verifique si el usuario tiene coche
+            if (usuario.getCoche()) {
                 return true;
             }
             break;
         }
         it.siguiente();
     }
-    return false; // No se encontró un coche alquilado para el usuario
+    return false;
 }
 
+/**
+ * @brief Destructor de la clase ReanelCar.
+ */
 ReanelCar::~ReanelCar() {
     for (int i = 0; i < coches.tamlog(); ++i) {
         delete coches[i];
