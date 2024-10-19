@@ -158,7 +158,7 @@ void ListaDEnlazada<T>::borraInicio() {
     if (cabecera == nullptr) return;
 
     Nodo<T>* borrado = cabecera;
-    cabecera = cabecera->getSiguiente();
+    cabecera = cabecera->sig;
 
     if (cabecera != nullptr) {
         cabecera->ant = nullptr;
@@ -176,7 +176,7 @@ void ListaDEnlazada<T>::borraFinal() {
     if (cola == nullptr) return;
 
     Nodo<T>* borrado = cola;
-    cola = cola->getAnterior();
+    cola = cola->ant;
 
     if (cola != nullptr) {
         cola->sig = nullptr;
@@ -194,17 +194,19 @@ void ListaDEnlazada<T>::borra(Iterador<T>& i) {
     Nodo<T>* actual = i.getNodo();
     if (actual == nullptr) throw std::invalid_argument("Iterador no válido");
 
-    if (actual->getAnterior() != nullptr) {
-        actual->getAnterior()->sig = actual->getSiguiente();
+    if (actual->ant != nullptr) {
+        actual->ant->sig = actual->sig;
     } else {
-        cabecera = actual->getSiguiente();
+        cabecera = actual->sig;
     }
 
-    if (actual->getSiguiente() != nullptr) {
-        actual->getSiguiente()->ant = actual->getAnterior();
+    if (actual->sig != nullptr) {
+        actual->sig->ant = actual->ant;
     } else {
-        cola = actual->getAnterior();
+        cola = actual->ant;
     }
+
+    i.siguiente();
 
     delete actual;
     numelementos--;

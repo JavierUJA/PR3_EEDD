@@ -19,12 +19,12 @@ int main(int argc, const char * argv[]) {
     empresa.cargarCoches("../coches.csv");
     empresa.cargarUsuarios("../usuarios1.csv");
 
-    //ListaDEnlazada<Usuario> usuariosW = empresa.buscarUsrNomb("W");
-    //VDinamico<Coche *> cochesFordFiesta = empresa.buscarCochModelo("Fiesta");
+    ListaDEnlazada<Usuario> usuariosW = empresa.buscarUsrNomb("W");
+    VDinamico<Coche *> cochesFordFiesta = empresa.buscarCochModelo("Fiesta");
     ListaDEnlazada<Usuario> usuarios = empresa.getUsuarios();
-    //Iterador<Usuario> itW = usuariosW.iterador();
+    Iterador<Usuario> itW = usuariosW.iterador();
 
-    /*if (!itW.haySiguiente()) {
+    if (!itW.haySiguiente()) {
         std::cerr << "No se encontraron usuarios cuyo nombre empieza con 'W'." << std::endl;
     } else {
 
@@ -45,13 +45,13 @@ int main(int argc, const char * argv[]) {
                 std::cout << "No hay Ford Fiesta disponible para el usuario " << usuario.getNombre() << std::endl;
             }
         }
-    }*/
+    }
 
     ListaDEnlazada<Usuario> usuariosWa = empresa.buscarUsrNomb("Wa");
     Iterador<Usuario> itWa = usuariosWa.iterador();
     Iterador<Usuario> itU = usuarios.iterador();
     if (itWa.haySiguiente()) {
-        while (itWa.haySiguiente()) {
+        while (itWa.getNodo() != nullptr) {
             std::string usuarioWa = itWa.dato().getNombre();
             while(itU.haySiguiente()) {
                 std::string user = itU.dato().getNombre();
