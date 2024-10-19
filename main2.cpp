@@ -46,6 +46,9 @@ int main(int argc, const char * argv[]) {
             }
         }
     }
+    int usuariosWCount=0;
+    usuariosWCount = usuariosW.tam();
+    std::cout << "Numero de usuarios cuyo nombre empieza con 'W' antes de eliminar: " << usuariosWCount << std::endl;
 
     ListaDEnlazada<Usuario> usuariosWa = empresa.buscarUsrNomb("Wa");
     Iterador<Usuario> itWa = usuariosWa.iterador();
@@ -68,6 +71,11 @@ int main(int argc, const char * argv[]) {
     } else {
         std::cerr << "No se encontraron usuarios cuyo nombre empieza con 'Wa'." << std::endl;
     }
+    ListaDEnlazada<Usuario> usuariosWn = empresa.buscarUsrNomb("W");
+
+    int usuariosWPostCount = usuariosWn.tam();
+    std::cout << "Numero de usuarios cuyo nombre empieza con 'W' despues de eliminar: " << usuariosWPostCount << std::endl;
+
 /*
     int usuariosConCoche = 0;
     Iterador<Usuario>it = usuariosW.iterador();
