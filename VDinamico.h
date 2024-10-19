@@ -27,7 +27,7 @@ public:
     void ordenar();
     int busquedabinaria(const std::string &dato);
     unsigned int tamlog();
-    void operator=(const VDinamico& origen);
+    T& operator=(const VDinamico& origen);
     T& operator[](unsigned int pos);
 };
 
@@ -54,14 +54,9 @@ VDinamico<T>::VDinamico(unsigned int tamlog): tamL(tamlog)
 
 
 template<class T>
-VDinamico<T>::~VDinamico(){
-    for(int i = 0; i < tamL; i++){
-        delete datos[i];
-    }
-    delete datos;
+VDinamico<T>::~VDinamico() {
+    delete[] datos;
 }
-
-
 /**
  * @brief Constructor de copia
  * @tparam orig Vector a copiar
@@ -208,7 +203,7 @@ unsigned int VDinamico<T>::tamlog(){
  * @param origen Vector donde asignar los datos
  */
 template<class T>
-void VDinamico<T>::operator=(const VDinamico& origen) {
+T& VDinamico<T>::operator=(const VDinamico& origen) {
     if (&origen != this) {
         delete [] datos;
         tamF = origen.tamF;
@@ -219,8 +214,9 @@ void VDinamico<T>::operator=(const VDinamico& origen) {
             datos[c] = origen.datos[c];
         }
 
-    }
 
+    }
+    return *this;
 }
 
 
