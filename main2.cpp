@@ -46,6 +46,7 @@ int main(int argc, const char * argv[]) {
             }
         }
     }
+
     int usuariosWCount=0;
     usuariosWCount = usuariosW.tam();
     std::cout << "Numero de usuarios cuyo nombre empieza con 'W' antes de eliminar: " << usuariosWCount << std::endl;
@@ -76,22 +77,6 @@ int main(int argc, const char * argv[]) {
     int usuariosWPostCount = usuariosWn.tam();
     std::cout << "Numero de usuarios cuyo nombre empieza con 'W' despues de eliminar: " << usuariosWPostCount << std::endl;
 
-/*
-    int usuariosConCoche = 0;
-    Iterador<Usuario>it = usuariosW.iterador();
-    if (!it.haySiguiente()) {
-        Iterador<Usuario> itW = usuariosW.iterador();
-        while (itW.haySiguiente()) {
-            Usuario& usuario = itW.dato();
-            itW.siguiente();
-            if (empresa.usuarioConCoche(usuario.getDNI())) {
-                usuariosConCoche++;
-            }
-        }
-    }
-
-
-    std::cout << "Usuarios cuyo nombre empieza con 'W' y tienen coche alquilado: " << usuariosConCoche << std::endl;
 
     auto inicioSecuencial = std::chrono::high_resolution_clock::now();
     VDinamico<Coche*> resultadoSecuencial = empresa.buscarCochModelo("Ford Fiesta");
@@ -106,12 +91,5 @@ int main(int argc, const char * argv[]) {
     std::cout << "Tiempo de búsqueda secuencial: " << duracionSecuencial.count() << " segundos" << std::endl;
     std::cout << "Tiempo de búsqueda binaria: " << duracionBinaria.count() << " segundos" << std::endl;
 
-    return 0;*/
 
-
-    Iterador<Usuario> itu = usuarios.iterador();
-    while(itu.haySiguiente()){
-        std::cout << itu.dato().getNombre() << ", ";
-        itu.siguiente();
-    }
 }
