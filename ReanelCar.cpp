@@ -159,14 +159,13 @@ VDinamico<Coche*> ReanelCar::buscarCochModelo(const std::string &modelo) {
  */
 bool ReanelCar::alquilar(Usuario &usuario, Coche &coche) {
     if (coche.getAlquilado()) {
-        std::cout << "El coche " << coche.getModelo() << " ya está alquilado." << std::endl;
+        std::cout << "El coche " << coche.getId() << " ya está alquilado." << std::endl;
         return false;
     }
+    usuario.setCoche(&coche);
+    coche.setAlquilado(true);
 
-    usuario.setCoche(coche);
-
-    std::cout << "Coche " << coche.getModelo() << " alquilado a " << usuario.getNombre() << " con DNI: " << usuario.getDNI() << std::endl;
-    std::cout << std::endl;
+    std::cout << "Coche " << coche.getId() << " alquilado a " << usuario.getNombre() << "." << std::endl;
     return true;
 }
 
@@ -210,4 +209,31 @@ ListaDEnlazada<Usuario> ReanelCar::getUsuarios(){
 void ReanelCar::setUsuarios(ListaDEnlazada<Usuario> users){
     this->usuarios = users;
 
+}
+bool ReanelCar::usuarioConCoche(const std::string& dni){
+    // Iteramos sobre la lista de usuarios
+    Iterador<Usuario> it = usuarios.iterador();
+    while (it.haySiguiente()) {
+        const Usuario& usuario = it.dato();
+        if (usuario.getDNI() == dni) {
+            // Si el usuario tiene un coche alquilado, retornamos true
+            if (usuario.getCoche()) { // Asegúrate de tener un método que verifique si el usuario tiene coche
+                return true;
+            }
+            break;
+        }
+        it.siguiente();
+    }
+    return false; // No se encontró un coche alquilado para el usuario
+}
+
+ReanelCar::~ReanelCar() {
+    for (int i = 0; i < coches.tamlog(); ++i) {
+        delete coches[i];
+        coches[i] = nullptr;
+    }
+    for (int i = 0; i < alquileres.tamlog(); ++i) {
+        delete alquileres[i];
+        alquileres[i] = nullptr;
+    }
 }
