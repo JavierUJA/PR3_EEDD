@@ -29,6 +29,7 @@ public:
     unsigned int tamlog();
     void operator=(const VDinamico& origen);
     T& operator[](unsigned int pos);
+    //void operator<(const )
 };
 
 

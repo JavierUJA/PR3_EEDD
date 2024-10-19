@@ -47,6 +47,13 @@ int main(int argc, const char * argv[]) {
         }
     }
 
+    Iterador<Usuario> it = usuarios.iterador();
+    while(it.haySiguiente()){
+        std::cout << it.dato().getCoche() << ", ";
+        it.siguiente();
+    }
+
+    /*
     ListaDEnlazada<Usuario> usuariosWa = empresa.buscarUsrNomb("Wa");
     Iterador<Usuario> itWa = usuariosWa.iterador();
     Iterador<Usuario> itU = usuarios.iterador();
@@ -68,22 +75,22 @@ int main(int argc, const char * argv[]) {
     } else {
         std::cerr << "No se encontraron usuarios cuyo nombre empieza con 'Wa'." << std::endl;
     }
-/*
+
     int usuariosConCoche = 0;
-    Iterador<Usuario>it = usuariosW.iterador();
-    if (!it.haySiguiente()) {
-        Iterador<Usuario> itW = usuariosW.iterador();
-        while (itW.haySiguiente()) {
-            Usuario& usuario = itW.dato();
-            itW.siguiente();
-            if (empresa.usuarioConCoche(usuario.getDNI())) {
-                usuariosConCoche++;
+    Iterador<Usuario>it = usuarios.iterador();
+    if (it.haySiguiente()) {
+        while(it.haySiguiente()){
+            if(it.dato().getNombre().find("W") == 0) {
+                if (it.dato().getCoche() != nullptr) {
+                    usuariosConCoche++;
+                }
             }
+            it.siguiente();
         }
     }
 
-
     std::cout << "Usuarios cuyo nombre empieza con 'W' y tienen coche alquilado: " << usuariosConCoche << std::endl;
+
 
     auto inicioSecuencial = std::chrono::high_resolution_clock::now();
     VDinamico<Coche*> resultadoSecuencial = empresa.buscarCochModelo("Ford Fiesta");
@@ -98,12 +105,12 @@ int main(int argc, const char * argv[]) {
     std::cout << "Tiempo de búsqueda secuencial: " << duracionSecuencial.count() << " segundos" << std::endl;
     std::cout << "Tiempo de búsqueda binaria: " << duracionBinaria.count() << " segundos" << std::endl;
 
-    return 0;*/
+    return 0;
 
 
     Iterador<Usuario> itu = usuarios.iterador();
     while(itu.haySiguiente()){
         std::cout << itu.dato().getNombre() << ", ";
         itu.siguiente();
-    }
+    }*/
 }

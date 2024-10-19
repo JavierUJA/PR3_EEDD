@@ -10,7 +10,7 @@ private:
     std::string contrasena;
     std::string nombre;
     std::string direccion;
-    Coche* coche;
+    Coche* coche = nullptr;
 
 public:
     Usuario(const std::string& dni, const std::string& contrasena, const std::string& nombre, const std::string& direccion)
@@ -25,6 +25,7 @@ public:
     void setDireccion(const std::string& newDireccion) { direccion = newDireccion; }
 
     void setCoche(Coche& coche) {
+        this->coche = &coche;
         std::cout << "Coche " << coche.getModelo() << " asignado temporalmente a " << nombre << "." << std::endl;
         coche.setAlquilado(true);
     }
