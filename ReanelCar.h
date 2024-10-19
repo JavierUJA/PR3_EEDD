@@ -34,7 +34,9 @@ public:
     void setUsuarios(ListaDEnlazada<Usuario> users);
     bool alquilar(Usuario &usuario, Coche &coche);
     bool usuarioConCoche(const std::string& dni);
+    ~ReanelCar();
 };
 
 
 #endif //PR2_EEDD_REANELCAR_H
+
