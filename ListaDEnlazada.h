@@ -6,135 +6,123 @@
 #include "Iterador.h"
 #include "Nodo.h"
 
-
-
 #ifndef PR3_DEFINITIVO_LISTADENLAZADA_H
 #define PR3_DEFINITIVO_LISTADENLAZADA_H
 
+/**
+ * @class ListaDEnlazada
+ * @brief Clase que representa una lista doblemente enlazada.
+ *
+ * La clase ListaDEnlazada permite almacenar y gestionar una colección de elementos
+ * de tipo genérico T, proporcionando métodos para insertar, borrar y acceder
+ * a elementos en la lista.
+ */
 template <class T>
-class ListaDEnlazada{
+class ListaDEnlazada {
 private:
-    Nodo<T> *cabecera, *cola;
-    int numelementos = 0;
-public:
-    ListaDEnlazada();
-    ListaDEnlazada(const ListaDEnlazada<T>& origen);
-    ~ListaDEnlazada();
-    Iterador<T> iterador() const;
-    T& inicio();
-    T& fin();
-    int tam();
-    void inserta(Iterador<T>& i, T& dato);
-    void insertarInicio(T& dato);
-    void insertarFin(T& dato);
-    void borra(Iterador<T>& i);
-    void borraInicio();
-    void borraFinal();
-    ListaDEnlazada<T>& operator=(ListaDEnlazada& otra_list);
+    Nodo<T>* cabecera; ///< Puntero al primer nodo de la lista.
+    Nodo<T>* cola; ///< Puntero al último nodo de la lista.
+    int numelementos = 0; ///< Número de elementos en la lista.
 
+public:
+    ListaDEnlazada(); ///< Constructor por defecto.
+    ListaDEnlazada(const ListaDEnlazada<T>& origen); ///< Constructor de copia.
+    ~ListaDEnlazada(); ///< Destructor.
+
+    Iterador<T> iterador() const; ///< Crea un iterador para recorrer la lista.
+    T& inicio(); ///< Devuelve el dato del primer nodo.
+    T& fin(); ///< Devuelve el dato del último nodo.
+    int tam(); ///< Devuelve el número de elementos en la lista.
+    void inserta(Iterador<T>& i, T& dato); ///< Inserta un elemento en la posición del iterador.
+    void insertarInicio(T& dato); ///< Inserta un elemento al inicio de la lista.
+    void insertarFin(T& dato); ///< Inserta un elemento al final de la lista.
+    void borra(Iterador<T>& i); ///< Borra el nodo en la posición del iterador.
+    void borraInicio(); ///< Borra el primer nodo de la lista.
+    void borraFinal(); ///< Borra el último nodo de la lista.
+    ListaDEnlazada<T>& operator=(ListaDEnlazada& otra_list); ///< Sobrecarga del operador de asignación.
 };
 
+template<class T>
+ListaDEnlazada<T>::ListaDEnlazada() : cabecera(0), cola(0) { }
 
 template<class T>
-ListaDEnlazada<T>::ListaDEnlazada(): cabecera(0),
-                                     cola(0)
-{
-
-}
-
-
-template<class T>
-ListaDEnlazada<T>::ListaDEnlazada(const ListaDEnlazada& origen): cabecera(nullptr),
-                                                                 cola(nullptr)
-{
-    if(origen.cabecera == nullptr){
+ListaDEnlazada<T>::ListaDEnlazada(const ListaDEnlazada& origen) : cabecera(nullptr), cola(nullptr) {
+    if (origen.cabecera == nullptr) {
         return;
-    };
+    }
 
     Iterador<T> it = origen.iterador();
-    while(it.haySiguiente()) {
-        Nodo <T>* nuevo = new Nodo<T>(it.dato(), it.getAnterior(), it.getSiguiente());
+    while (it.haySiguiente()) {
+        Nodo<T>* nuevo = new Nodo<T>(it.dato(), it.getAnterior(), it.getSiguiente());
 
-        if(cabecera == nullptr){
+        if (cabecera == nullptr) {
             cabecera = nuevo;
             cola = nuevo;
-        }else{
+        } else {
             cola->sig = nuevo;
             nuevo->ant = cola;
-
             cola = nuevo;
         }
         it.siguiente();
     }
 }
 
-
 template<class T>
-ListaDEnlazada<T>& ListaDEnlazada<T>::operator=(ListaDEnlazada& otra_list){
+ListaDEnlazada<T>& ListaDEnlazada<T>::operator=(ListaDEnlazada& otra_list) {
     this->cabecera = otra_list.cabecera;
     this->cola = otra_list.cola;
+    return *this;
 }
-
 
 template<class T>
 T& ListaDEnlazada<T>::inicio() {
-    Nodo<T> *nodo = cabecera;
-
+    Nodo<T>* nodo = cabecera;
     return nodo->dato;
 }
-
 
 template<class T>
 T& ListaDEnlazada<T>::fin() {
-    Nodo<T> *nodo = cola;
-
+    Nodo<T>* nodo = cola;
     return nodo->dato;
 }
 
-
 template<class T>
-Iterador<T> ListaDEnlazada<T>::iterador() const{
+Iterador<T> ListaDEnlazada<T>::iterador() const {
     return Iterador<T>(cabecera);
 }
 
 template<class T>
-void ListaDEnlazada<T>::insertarInicio(T &dato) {
-    Nodo<T> *nuevo;
-    nuevo = new Nodo<T>(dato, 0, cabecera);
+void ListaDEnlazada<T>::insertarInicio(T& dato) {
+    Nodo<T>* nuevo = new Nodo<T>(dato, 0, cabecera);
 
-    if (cola == nullptr){
+    if (cola == nullptr) {
         cola = nuevo;
-    };
+    }
 
-    if (cabecera != nullptr){
+    if (cabecera != nullptr) {
         cabecera->ant = nuevo;
     }
     cabecera = nuevo;
 
     numelementos++;
-
 }
 
-
 template<class T>
-void ListaDEnlazada<T>::insertarFin(T &dato) {
-    Nodo<T> *nuevo;
-    nuevo = new Nodo<T>(dato, cola, 0);
+void ListaDEnlazada<T>::insertarFin(T& dato) {
+    Nodo<T>* nuevo = new Nodo<T>(dato, cola, 0);
 
-    if (cabecera == 0){
+    if (cabecera == 0) {
         cabecera = nuevo;
     }
 
-    if (cola != 0){
+    if (cola != 0) {
         cola->sig = nuevo;
     }
 
     cola = nuevo;
 
     numelementos++;
-
 }
-
 
 template<class T>
 void ListaDEnlazada<T>::inserta(Iterador<T>& i, T& dato) {
@@ -151,7 +139,6 @@ void ListaDEnlazada<T>::inserta(Iterador<T>& i, T& dato) {
     actual->ant = nuevo;
     numelementos++;
 }
-
 
 template<class T>
 void ListaDEnlazada<T>::borraInicio() {
@@ -170,7 +157,6 @@ void ListaDEnlazada<T>::borraInicio() {
     numelementos--;
 }
 
-
 template<class T>
 void ListaDEnlazada<T>::borraFinal() {
     if (cola == nullptr) return;
@@ -187,7 +173,6 @@ void ListaDEnlazada<T>::borraFinal() {
     delete borrado;
     numelementos--;
 }
-
 
 template<class T>
 void ListaDEnlazada<T>::borra(Iterador<T>& i) {
@@ -207,17 +192,14 @@ void ListaDEnlazada<T>::borra(Iterador<T>& i) {
     }
 
     i.siguiente();
-
     delete actual;
     numelementos--;
 }
-
 
 template<class T>
 int ListaDEnlazada<T>::tam() {
     return numelementos;
 }
-
 
 template<class T>
 ListaDEnlazada<T>::~ListaDEnlazada() {
@@ -230,6 +212,4 @@ ListaDEnlazada<T>::~ListaDEnlazada() {
     numelementos = 0;
 }
 
-
-#endif //PR2_EEDD_LISTADENLAZADA_H
-
+#endif // PR3_DEFINITIVO_LISTADENLAZADA_H
